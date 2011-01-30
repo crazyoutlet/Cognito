@@ -10,8 +10,14 @@
 	
 			
 			/* Clean inputs*/
-			$clean['username']=$_POST['username'];
-			$clean['password']=$_POST['password'];
+	
+			$clean = array();
+			$clean['username']=filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+			$clean['password']=filter_var($_POST['password'], FILTER_SANITIZE_STRING);
+			
+			
+			$clean['username']=mysql_real_escape_string($clean['username']);
+			$clean['password']=mysql_real_escape_string($clean['password']);
 	
 			$inputquery = 'SELECT UserId FROM cognito_accounts WHERE Username = "'.$clean['username'].'" AND Password = "'.sha1($clean['password'].'yyc478shaocloudrandnamemisterdn').'" LIMIT 1';
 			

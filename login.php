@@ -1,10 +1,6 @@
 <?php
 	require_once('inc/header.php');
-	
-	if (isset($_SESSION['userinfo'])){
-		header('Location:home.php');
-	}
-	
+
 	
 	$displaymsg = '';
 	
@@ -27,17 +23,27 @@
 			}else if($resultsinputquery==1){
 				$getinputid = mysql_fetch_array($executeinputquery);
 			
+				/* Set the last login time */
+		
+				$insertlastlogintimequery = 'UPDATE cognito_accounts SET LastLogin ="'.date( 'Y-m-d H:i:s', time()).'" WHERE Username="'.$clean['username'].'" AND Password="'.sha1($clean['password'].$passwordsalt).'"';
+		
+							
+			
 				$_SESSION['userinfo']=array();
 				$_SESSION['userinfo']['userid']=$getinputid[0];
 				$_SESSION['userinfo']['username']=$clean['username'];
 				
 			
 				$displaymsg = 'Logged in successfully. Will be redirected';
-				header('Location:home.php');
+				
 			}
 			
 						
 		}
+	}
+	
+	if (isset($_SESSION['userinfo'])){
+		header('Location:home.php');
 	}
 	
 	$_SESSION['hiddenkey']=sha1(time());

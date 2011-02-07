@@ -12,13 +12,14 @@
 		$clean['title'] = nl2br($_POST['title']);
 		$clean['title'] = mysql_real_escape_string($clean['title']);
 		
-		var_dump($clean);
-		var_dump($_SESSION['groupinfoarray']);
+		$groupid = $_SESSION['groupinfoarray']['groupid'];
+		$userid = $_SESSION['userinfo']['userid'];
 		
 		
-		#$insertmessage = 'INSERT INTO grouppost(groupid,userid,title,message,time,priority) VALUES("'.1.'","'.1.'","'.1.'","'.1.'","'.1.'","'.1.'")';
-		
-		
+		$insertmessage = 'INSERT INTO grouppost(groupid,userid,title,message,time,priorityid) VALUES("'.$groupid.'","'.$userid.'","'.$clean['title'].'","'.$clean['message'].'","'.date( 'Y-m-d H:i:s', time())
+		.'","1")';
+		$message = mysql_query($insertmessage);
+		echo $message;
 		
 	}
 	

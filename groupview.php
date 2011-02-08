@@ -39,9 +39,23 @@
 				
 				$.post("insertprojectmessage.php", { title: messagetitle, message: messagecontent },
    					function(data){
-    					alert("Data Loaded: " + data);
+    					getposts();
    				});
 			});
+			
+			function getposts() {
+				var gid = $('#groupie').val();
+				
+				$.post('fetchprojectposts.php',{groupid:gid},
+					function(data){
+						console.log(data);
+						$('#postmessages').html(data);
+				
+				});	
+				
+			}
+			getposts();
+			setInterval(getposts,5000);
 			
 		});
 	</script>
@@ -72,34 +86,26 @@
 
        		
        		<h3>Posts <span style="font-weight:normal;">(more)</span></h3>
+       		<input type="hidden" id="groupie" value="<?php echo $groupinfoarray['groupid']; ?>"/>
+       		<div id="posts">
+       			<table>
        		
-       		<?php
-       			$fetchposts = 'SELECT grouppost.title,grouppost.message,grouppost.time,grouppost.priorityid,accounts.username FROM grouppost, accounts WHERE groupid = "'.$groupinfoarray['groupid'].'" AND grouppost.userid = accounts.userid ORDER BY time DESC LIMIT 20'; 
-       			$getposts = mysql_query($fetchposts);
-       			echo '<table>';
-       			while($row = mysql_fetch_array($getposts)){
-       				echo '<tr><td></td><td>';
-       				echo '<span style="float:right;">'.$row['time'].'</span>';
-       				
-       				echo '<b>'.$row['title'].'</b><br>';
-       				
-       				
-       				echo '<br>'.$row['message'];
-       				echo '<br><i style="float:right;">- '.$row['username'].'</i>';
-       				echo '</td></tr>';
-       			}
+       			<div id="postmessages"></div>
        			
-       			echo '<tr><td></td><td>
+       		
+       			<tr><td></td><td>
        			
        			Title: <input type="text" id="messagetitle"/>
-       			<br><br><textarea rows="5" cols="100" id="message"></textarea>
+       			<br><br><textarea rows="5" cols="70" id="message"></textarea>
        			
        			<input type="submit" id="submitmessage"/>
        			
-       			</td></tr>';
+       			</td><td></td>
        			
-       			echo '</table>';
-       		?>
+       			</tr>
+       			
+       			</table>
+       		</div>
        		
        		<h3>Calendar <span style="font-weight:normal;">(more)</span></h3>
        		

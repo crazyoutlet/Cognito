@@ -33,16 +33,6 @@
 	<script>
 		$(document).ready(function(){
 			
-			$('#submitmessage').click(function(){
-				var messagetitle = $('#messagetitle').val();
-				var messagecontent = $('#message').val();
-				
-				$.post("insertprojectmessage.php", { title: messagetitle, message: messagecontent },
-   					function(data){
-    					getposts();
-   				});
-			});
-			
 			function getposts() {
 				var gid = $('#groupie').val();
 				
@@ -56,6 +46,18 @@
 			}
 			getposts();
 			setInterval(getposts,5000);
+			
+			
+			$('#submitmessage').click(function(){
+				var messagetitle = $('#messagetitle').val();
+				var messagecontent = $('#message').val();
+				
+				$.post("insertprojectmessage.php", { title: messagetitle, message: messagecontent },
+   					function(data){
+   						getposts();
+    					//alert("Data Loaded: " + data);
+   				});
+			});
 			
 		});
 	</script>

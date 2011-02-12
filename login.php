@@ -7,7 +7,6 @@
 	if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['hidden'])){
 		if ($_POST['hidden'] == $_SESSION['hiddenkey']){
 			/* Prevent sending of POST request from third party site*/
-	
 			
 			/* Clean inputs*/
 	
@@ -19,7 +18,7 @@
 			$clean['username']=mysql_real_escape_string($clean['username']);
 			$clean['password']=mysql_real_escape_string($clean['password']);
 	
-			$inputquery = 'SELECT UserId FROM cognito_accounts WHERE Username = "'.$clean['username'].'" AND Password = "'.sha1($clean['password'].'yyc478shaocloudrandnamemisterdn').'" LIMIT 1';
+			$inputquery = 'SELECT UserId FROM accounts WHERE username = "'.$clean['username'].'" AND password = "'.sha1($clean['password'].$passwordsalt).'" LIMIT 1';
 			
 			$executeinputquery = mysql_query($inputquery);
 			$resultsinputquery = mysql_num_rows($executeinputquery);
@@ -31,9 +30,9 @@
 			
 				/* Set the last login time */
 		
-				$insertlastlogintimequery = 'UPDATE cognito_accounts SET LastLogin ="'.date( 'Y-m-d H:i:s', time()).'" WHERE Username="'.$clean['username'].'" AND Password="'.sha1($clean['password'].$passwordsalt).'"';
+				$insertlastlogintimequery = 'UPDATE accounts SET lastlogin ="'.date( 'Y-m-d H:i:s', time()).'" WHERE username="'.$clean['username'].'" AND password="'.sha1($clean['password'].$passwordsalt).'"';
 		
-							
+				$results = mysql_query($insertlastlogintimequery);			
 			
 				$_SESSION['userinfo']=array();
 				$_SESSION['userinfo']['userid']=$getinputid[0];
@@ -59,17 +58,56 @@
 ?>
 <html>
 <head>
-<title></title>
+	<title></title>
+	<link href="css/screen.css" type="text/css" rel="stylesheet" media="screen,projection" />
+
 </head>
 <body>
-<?php echo $displaymsg;?>
-<form action='login.php' method='post'>
-	Username <input type = 'text' name='username'><br>
-	Password<input type = 'password' name='password'><br>
-	<input type = 'hidden' name='hidden' value='<?php echo $_SESSION['hiddenkey']?>'>
-	<input type="submit">
+	<div id="layout">
+      
+      <div id="header">
+        
+        <h1 id="logo"><a href="index.php" title="#"><span>Project</span> Cognito</a></h1>
+        <hr class="noscreen" />   
+          
+		<?php include('inc/nav.php')  ?>            
 
-</form>
-
+        <hr class="noscreen" />  
+    
+      </div>
+          
+        <div id="main">
+        
+        <div id="main-box">
+        <div id="quote"><br><br></div>
+        </div>
+        
+        <div id="content">
+        <h2>Login</h2>
+        <p>
+        <?php echo $displaymsg;?>
+		<form action='login.php' method='post'>
+			Username <input type = 'text' name='username'><br>
+			Password <input type = 'password' name='password'><br>
+			<input type = 'hidden' name='hidden' value='<?php echo $_SESSION['hiddenkey']?>'>
+			<input type="submit">
+	
+		</form>
+        </p>
+        
+     
+        
+        <div id="footer">
+        <p id="copyright">&copy; 2008 - <a href="/">Your name</a></p>
+        
+        <!-- Please don't delete this. You can use this template for free and this is the only way that you can say thanks to me -->
+          <p id="dont-delete-this">Design by <a href="http://www.davidkohout.cz">David Kohout</a> | Our tip: <a href="http://www.junglegym.cz/uvodni-stranka.aspx" title="Dětská Hřiště Jungle Gym">Dětská Hřiště</a></p>
+        <!-- Thank you :) -->
+        
+        </div>
+        
+        </div>
+        </div>
+        
 </body>
 </html>

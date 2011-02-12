@@ -1,0 +1,167 @@
+* { margin:0; padding:0; }
+body, div, span, p, a, img, ul, ol, li, table, th, tr, td, form, fieldset, legend, dl, dt, dd, blockquote, applet, object { border:0; }
+body { 
+  padding: 0; 
+  background: #fff url('../img/bg.jpg') repeat-x; 
+  font: 0.8em/1.5 "arial",sans-serif; 
+  color: #303030; 
+  text-align: center; 
+}
+
+a {color:#d8165c;}
+a:link {color:#d8165c;}
+a:hover {color:#d8165c; text-decoration: none;}
+
+h1, h2, h3, h4, h5, h6 { margin:15px 0 7px 0; }
+h1 { font-size:200%; }
+h2 { font-size:160%; font-weight: normal; color: #d8165c; }
+h3 { font-size:105%; border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-top: 25px; margin-bottom: 14px;}
+h4 { font-size:120%; }
+h5 { font-size:100%; }
+
+#layout { 
+  width:810px; 
+  margin:0 auto; 
+  text-align:left; 
+}
+
+  	#header { padding:10px 0 0 0; position:relative; }
+  
+      #logo {
+        position: relative; 
+        overflow: hidden; 
+        width: 250px; height: 108px;
+        font-size:250%;
+        margin: 0;
+        line-height: 108px;
+        text-align: center;
+      }
+      #logo a{
+        text-decoration: none;
+        color: #d8165c;
+        font-weight: normal; 
+        padding: 0px 10px 7px 10px;  
+      }
+      
+      #logo span {
+        color: #f5a700;
+      }
+      
+      #navigation{
+        position: absolute;
+        left: 270px;
+        line-height: 83px;
+        display: block;
+        height: 108px;
+        width: 530px;
+        top: 10px;
+        text-align: right;
+        font-size: 95%;
+      }
+      
+      #navigation ul li{
+        display: inline;
+      }
+      
+      #navigation li a {
+        font-size:120%;
+        color: #1b1b1b;
+        padding: 15px 12px;
+        text-decoration: none; border-left: 1px solid #eeebcd;
+      }
+      
+      #first a {
+        border: none !important;
+      }
+      
+      #navigation a:hover {
+        text-decoration: underline;
+      }
+  
+      #main-box {
+      color: #fff;
+      font-size: 24px;
+      background: #d8165c url('../img/main-top.jpg') repeat-x;;  
+      }
+      
+      #quote {
+      padding: 15px;
+      background: url('../img/main-corner.jpg') no-repeat right bottom;
+      }
+      
+      #main {
+      padding: 0 20px 0 37px
+      }
+      
+      #content {
+      padding: 10px 12px;
+      }
+      
+      #footer {
+      padding: 10px 0 10px 0px; margin-left: 15px;
+      color: #aaaaaa;
+      border-top: 1px solid #dadada;
+      }
+      
+      #footer p {
+      margin-top: 0;
+      margin-bottom: 0;
+      }
+      
+      #copyright {
+      float: left; 
+      width: 300px;
+      }
+      
+      #dont-delete-this{
+      margin: 0 0 0 323px;
+      text-align: right;
+      }
+      
+      .thumbnail
+{
+float: left;
+margin: 0 13px 20px 0px;
+}
+
+a img {
+  border: 1px solid #dadada;
+}
+
+a:hover img {
+  border: 1px solid #bbbbbb;
+}
+
+p { margin:10px 0 15px 0; line-height: 24px; font-size: 95%}
+
+.content p {color: #fff; margin-top: 10px;}
+
+table { margin:10px 0; border: 1px solid #cdcdcd; border-collapse:collapse; border-spacing:0; font-size:100%; width: 100%;}
+th { text-align:center; font-weight:bold; border: 1px solid #cdcdcd;}
+th, td { padding:4px 6px; border: 1px solid #cdcdcd;}
+tr.table-top {background: #e5e5e5; font-weight: bold;}
+
+ul, ol { display:block; margin:15px 0 15px 40px; }
+ul ul, ul ul ul, ol ol, ol ol ol { margin:0; margin-left:20px; }
+ol { list-style-type:decimal; }
+ol ol { list-style-type:upper-alpha; }
+ol ol ol {list-style-type:lower-alpha; }
+li { display:list-item; }
+ul li a { text-decoration:underline; }
+
+dl { margin:15px 0; }
+dt { font-weight:bold; }
+dd { margin-left:30px; }
+
+fieldset { margin:15px 0; padding:10px; border:1px solid #CCC; }
+legend { margin-left:10px; font-size:100%; font-weight:bold; color:#000; }
+abbr, acronym, .help { border-bottom:1px dotted #CCC; cursor:help; }
+blockquote { margin:15px 20px; font-style:italic; }
+del, .del { text-decoration:line-through; }
+strong, .strong { font-weight:bold; }
+cite, em, q, var { font-style:italic; }
+code, kbd, samp  {font-family:monospace; font-size:110%; }
+hr { display:block; height:1px; margin:10px 0; padding:0; border:0 solid #CCC; background:#CCC; color:#CCC;} 
+.light {padding: 4px 5px; background: #ac0001; text-decoration: none;} .light:hover {color: #fff;}
+.noscreen { display:none; }
+.clear {clear: both;}

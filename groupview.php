@@ -71,7 +71,40 @@
 					   
 					});
 			});
-						  
+			$('.calnav').click(function(event){
+				event.preventDefault();
+				var value=$(this).html();
+				var calendarmonth = $('#calendarmonth').val();
+				var calendaryear = $('#calendaryear').val();
+				
+				if(value=='Previous Month'){
+					if(calendarmonth>1&&calendarmonth<=12){
+						calendarmonth--;
+						
+					}
+					else if(calendarmonth==1){
+						calendarmonth=12;
+						calendaryear--;
+					}
+				}else if(value=="Next Month"){
+					if(calendarmonth>=1&&calendarmonth<=11){
+						calendarmonth++;
+					}else if(calendarmonth==12){
+						calendarmonth=1;
+						calendaryear+=1;
+					}
+							   
+				}
+							   
+				alert(calendarmonth+"  "+calendaryear);
+							   
+				$.post('fetchcalendar.php',{month:calendarmonth,year:calendaryear},
+					function(data){
+					   $('#calendararea').html(data);			  
+									  
+				});
+			});
+			
 		});
 	</script>
 </head>
@@ -123,15 +156,17 @@
        		</div>
        		
        		<h3>Calendar <span style="font-weight:normal;">(more)</span></h3>
+			<a href="#" class="calnav" value="prev">Previous Month</a>
+			<a href="#" class="calnav" value="next">Next Month</a>
+			<div id="calendararea"><?php include_once('calendardisplay.php');?></div>
 
-			<?php include_once('calendardisplay.php');?>
 			<div id="displaycalendarevents" style="border:1px solid gray; padding:20px"></div>
        		
        		<h3>Milestones<span style="font-weight:normal;">(more)</span></h3>
        		
        		<h3>Events <span style="font-weight:normal;">(more)</span></h3>
        		
-       		<?php
+			<?php
        			$getevents = 'SELECT duration.label, events.title, events.description, events.time FROM duration, events WHERE events.groupid="'.$groupinfoarray['groupid'].'" AND duration.durationid = events.durationid';
        			$fetchevents = mysql_query($getevents);
        			echo '<table>';

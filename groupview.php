@@ -59,11 +59,12 @@
    				});
 			});
 			
-			$('td').click(function(){
+			$('td').live('click',function(){
 				var gid = $('#groupie').val();		  
 				var mon = $('#calendarmonth').val();
 				var yea = $('#calendaryear').val();	
-						  
+				
+				console.log(gid+"  month:"+mon+"  year:"+yea);
 				var squareid = ($(this).attr('id'));
 				$.post('fetchcalendarevents.php',{groupid:gid,month:mon,year:yea,dayofmonth:squareid},
 					function(data){

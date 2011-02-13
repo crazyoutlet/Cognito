@@ -51,7 +51,7 @@
 				
 			}else{
 				if($_POST['dayofmonth']<=31 && $_POST['dayofmonth']>=0){
-					$clean['year']=$_POST['year'];
+					$clean['dayofmonth']=$_POST['dayofmonth'];
 				}else{
 					$ok=0;
 				}
@@ -59,9 +59,12 @@
 		}else{
 			$ok=0;
 		}
+		
+		
 		//If validated
 		if($ok==1){
 			$clean['month']=str_pad($clean['month'],2,'0',STR_PAD_LEFT);
+			var_dump($clean);
 			$clean['dayofmonth']=str_pad($clean['dayofmonth'],2,'0',STR_PAD_LEFT);
 			
 			$dateformat = $clean['year'].'-'.$clean['month'].'-'.$clean['dayofmonth'];

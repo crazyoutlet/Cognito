@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 07, 2011 at 06:48 PM
+-- Generation Time: Feb 13, 2011 at 09:29 PM
 -- Server version: 5.1.37
 -- PHP Version: 5.2.11
 
@@ -52,9 +52,54 @@ CREATE TABLE `accounts` (
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` VALUES(1, 'johnnyfishcake', '8d9f17ba1eaa387f25f73cf6854fb0f844ffd537', 1, '2011-02-06 19:48:44', 1);
+INSERT INTO `accounts` VALUES(1, 'johnnyfishcake', '8d9f17ba1eaa387f25f73cf6854fb0f844ffd537', 1, '2011-02-13 11:55:49', 1);
 INSERT INTO `accounts` VALUES(2, 'hwathechong', 'sha1(hwathechong)', 1, '2011-02-04 19:03:20', 1);
 INSERT INTO `accounts` VALUES(3, 'chickennugget', 'sha1(chickennugget)', 1, '2011-02-04 19:28:24', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `calendar`
+--
+
+CREATE TABLE `calendar` (
+  `calendarid` int(11) NOT NULL AUTO_INCREMENT,
+  `itemname` varchar(100) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `date` datetime NOT NULL,
+  `groupid` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
+  `repeatid` tinyint(4) NOT NULL,
+  PRIMARY KEY (`calendarid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `calendar`
+--
+
+INSERT INTO `calendar` VALUES(1, 'Research Paper Submission', 'Submit to Mr Jones at 1 am in front of the staff room.', '2011-02-14 00:00:00', 1, 1, 1);
+INSERT INTO `calendar` VALUES(2, 'Lit review review', 'Review of the lit review by the lit review team, which will be reviewing your lit review using a thorough lit reviewing technique.', '2011-02-10 17:06:32', 1, 1, 1);
+INSERT INTO `calendar` VALUES(3, 'Christmas Rehearsals', 'We have to prepare for the christmas rehearsals at the end of the year even though its February.', '2011-02-08 17:08:38', 1, 1, 1);
+INSERT INTO `calendar` VALUES(4, 'Mentor meetup', 'Our mentor wants to meet us. He has decided to shoot any of us if we do not appear ', '2011-02-14 17:10:55', 1, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `calendarrepeat`
+--
+
+CREATE TABLE `calendarrepeat` (
+  `repeatid` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `label` varchar(20) NOT NULL,
+  PRIMARY KEY (`repeatid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `calendarrepeat`
+--
+
+INSERT INTO `calendarrepeat` VALUES(1, 'No repeat');
+INSERT INTO `calendarrepeat` VALUES(2, 'Daily');
 
 -- --------------------------------------------------------
 
@@ -216,7 +261,7 @@ CREATE TABLE `grouppost` (
   `time` datetime NOT NULL,
   `priorityid` tinyint(4) NOT NULL,
   PRIMARY KEY (`postid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Store messages posted in groups' AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Store messages posted in groups' AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `grouppost`
@@ -225,6 +270,8 @@ CREATE TABLE `grouppost` (
 INSERT INTO `grouppost` VALUES(1, 1, 1, 'Work Allocation', 'Here is what I propose: <br> I will do the research while the rest of you work on the powerpoint.', '2011-02-06 12:43:53', 1);
 INSERT INTO `grouppost` VALUES(2, 1, 1, 'Contact Information', 'Email me your contact information ASAP or risk termination from the project. Cheers!', '2011-02-06 14:38:23', 1);
 INSERT INTO `grouppost` VALUES(3, 1, 2, 'Research Due', 'Hello. Research is due.', '2011-02-07 18:07:03', 1);
+INSERT INTO `grouppost` VALUES(4, 1, 1, 'Web Report', 'Web report due!', '2011-02-07 21:02:07', 1);
+INSERT INTO `grouppost` VALUES(5, 1, 1, 'Mentor Session', 'We need to meet our mentor, mr KCTan', '2011-02-08 21:30:55', 1);
 
 -- --------------------------------------------------------
 
@@ -329,11 +376,13 @@ INSERT INTO `schools` VALUES(2, 'Cow High School', 'Bukit Timah Moo Avenue', 2);
 --
 
 CREATE TABLE `siteconfig` (
-  `status` tinyint(4) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`status`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `feature` varchar(20) NOT NULL,
+  `state` tinyint(4) NOT NULL,
+  PRIMARY KEY (`feature`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `siteconfig`
 --
 
+INSERT INTO `siteconfig` VALUES('registration', 1);

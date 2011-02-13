@@ -38,7 +38,7 @@
 				
 				$.post('fetchprojectposts.php',{groupid:gid},
 					function(data){
-						console.log(data);
+						//console.log(data);
 						$('#postmessages').html(data);
 				
 				});	
@@ -59,6 +59,15 @@
    				});
 			});
 			
+			$('td').click(function(){
+				var squareid = ($(this).attr('id'));
+				$.post('fetchcalendarevents.php',{},
+					function(data){
+					   $('#displaycalendarevents').html(data);
+					   
+					});
+			});
+						  
 		});
 	</script>
 </head>
@@ -110,6 +119,9 @@
        		</div>
        		
        		<h3>Calendar <span style="font-weight:normal;">(more)</span></h3>
+
+			<?php include_once('calendardisplay.php');?>
+			<div id="displaycalendarevents" style="border:1px solid gray; padding:20px"></div>
        		
        		<h3>Milestones<span style="font-weight:normal;">(more)</span></h3>
        		

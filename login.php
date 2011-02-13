@@ -94,7 +94,18 @@
 	
 		</form>
         </p>
-        
+        <a href="forgot.php">Forgot your password?</a>
+		<?php
+			$checkregistrationstate = 'SELECT state FROM siteconfig WHERE feature="registration"';
+			$registrationstate = mysql_query($checkregistrationstate);
+			$registrationstate = mysql_fetch_array($registrationstate);
+			$registrationstate = $registrationstate['state'];
+			
+			if($registrationstate==1){
+				//Allow users to register by themself	
+				echo '<a href="register.php">Register</a>';
+			}
+		?>
      
         
         <div id="footer">

@@ -60,8 +60,12 @@
 			});
 			
 			$('td').click(function(){
+				var gid = $('#groupie').val();		  
+				var mon = $('#calendarmonth').val();
+				var yea = $('#calendaryear').val();	
+						  
 				var squareid = ($(this).attr('id'));
-				$.post('fetchcalendarevents.php',{},
+				$.post('fetchcalendarevents.php',{groupid:gid,month:mon,year:yea,dayofmonth:squareid},
 					function(data){
 					   $('#displaycalendarevents').html(data);
 					   

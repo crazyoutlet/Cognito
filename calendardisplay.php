@@ -4,10 +4,11 @@
 <table cellpadding="0" cellspacing="0" class="calendar" border="1">
 
 <?php
-	$month = 6;
+	$month = 2;
 	$year = 2011;
 	$calendar='';
-	
+	echo '<input type="hidden" id="calendarmonth" value="'.$month.'">';
+	echo '<input type="hidden" id="calendaryear" value="'.$year.'">';
 	$headings = array('Sun','Mon','Tues','Wed','Thur','Fri','Sat');
 	
 	echo '<tr><th width="40px">'.implode('</th><th width="40px">',$headings).'</th></tr>';

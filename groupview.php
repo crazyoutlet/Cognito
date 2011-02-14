@@ -64,7 +64,6 @@
 				var mon = $('#calendarmonth').val();
 				var yea = $('#calendaryear').val();	
 				
-				console.log(gid+"  month:"+mon+"  year:"+yea);
 				var squareid = ($(this).attr('id'));
 				$.post('fetchcalendarevents.php',{groupid:gid,month:mon,year:yea,dayofmonth:squareid},
 					function(data){
@@ -72,6 +71,30 @@
 					   
 					});
 			});
+			$('#createnewbutton').live('click',function(event){
+				var title = $('#createnewtitle').val();
+				var description = $('#createnewdescription').val();
+				var selecteddate = $('#selecteddate').val();
+				var gid = $('#groupie').val();
+				
+				if(title!='' && description!=''){
+					$.post('createnewcalendaritem.php',{title:title,description:description,date:selecteddate,groupid:gid},
+					function(data){
+						alert(data);
+					   
+					});
+				}
+			});
+			$('#createnewthing').live('click',function(event){
+				event.preventDefault();
+				//alert($('#selecteddate').val());
+									  
+				var displaystring =	'<form>Title<input type="text" id="createnewtitle"><br>Description<textarea id="createnewdescription"/><input type="button" id="createnewbutton" value="Create"></form>';
+						
+				$('#createsomethingnewbox').html(displaystring);					  
+									  
+			});
+						  
 			$('.calnav').click(function(event){
 				event.preventDefault();
 				var value=$(this).html();
@@ -97,7 +120,6 @@
 							   
 				}
 							   
-				alert(calendarmonth+"  "+calendaryear);
 							   
 				$.post('fetchcalendar.php',{month:calendarmonth,year:calendaryear},
 					function(data){

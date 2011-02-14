@@ -63,8 +63,10 @@
 		
 		//If validated
 		if($ok==1){
+			
+			echo '<a id="createnewthing" href="#" style="float:right;">Create new thing</a><br><div id="createsomethingnewbox"></div>';
+			
 			$clean['month']=str_pad($clean['month'],2,'0',STR_PAD_LEFT);
-			var_dump($clean);
 			$clean['dayofmonth']=str_pad($clean['dayofmonth'],2,'0',STR_PAD_LEFT);
 			
 			$dateformat = $clean['year'].'-'.$clean['month'].'-'.$clean['dayofmonth'];
@@ -77,8 +79,10 @@
 				$line .='<p>'.$stuffrow['description'].'</p>';
 				$line .='<span>'.$stuffrow['date'].'</span>';
 				
+				
 				echo $line;
 			}
+			echo '<input type="hidden" value="'.$dateformat.'" id="selecteddate">';
 		}
 	}
 	

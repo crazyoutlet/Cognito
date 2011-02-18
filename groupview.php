@@ -80,7 +80,7 @@
 				if(title!='' && description!=''){
 					$.post('createnewcalendaritem.php',{title:title,description:description,date:selecteddate,groupid:gid},
 					function(data){
-						alert(data);
+						
 					   
 					});
 				}

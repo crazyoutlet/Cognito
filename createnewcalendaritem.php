@@ -15,5 +15,7 @@
 		$insertquery = 'INSERT INTO calendar(itemname,description,date,groupid,repeatid) VALUES("'.$clean['title'].'","'.$clean['description'].'","'.$clean['date'].'","'.$_POST['groupid'].'","1")';
 	
 		$query = mysql_query($insertquery) or die('shitface');
+		
+		echo 'success';
 	}
 ?>

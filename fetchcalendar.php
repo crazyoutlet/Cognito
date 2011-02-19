@@ -1,8 +1,13 @@
 <?php
+	require_once('inc/header.php');
+	if(!isset($_SESSION['userinfo'])){
+		header('Location:login.php');
+	}
+	
 	if(isset($_POST['month'])&&isset($_POST['year'])){
-		
+		//var_dump($_SESSION["groupinfoarray"]);
 		//VALIDATE THE MONTH AND YEAR!
-		$monthheadings = array('January','Febuary','March','April','May','June','July','August','September','October','November','December');
+		$monthheadings = array('January','February','March','April','May','June','July','August','September','October','November','December');
 		echo '<h1>'.$monthheadings[$_POST['month']-1].'</h1>';
 		
 		echo '<table cellpadding="0" cellspacing="0" class="calendar" border="1">';
@@ -30,8 +35,23 @@
 		
 		/* keep going with days.... */
 		for($list_day = 1; $list_day <= $days_in_month; $list_day++){
-			echo '<td id="'.$list_day.'">';
+			
 			/* add in the day number */
+			
+			//QUERY FOR STUFF
+			$month=str_pad($month,2,'0',STR_PAD_LEFT);
+			$day=str_pad($list_day,2,'0',STR_PAD_LEFT);
+			
+			
+			$dateformat = $year.'-'.$month.'-'.$day;
+			//echo $_SESSION["groupinfoarray"]["groupid"].$dateformat;
+			$selectstuff = 'SELECT * FROM  `calendar` WHERE DATE LIKE  "'.$dateformat.'%" AND groupid="'.$_SESSION['groupinfoarray']['groupid'].'" ORDER BY DATE ASC';
+			
+			$selectstuff = mysql_query($selectstuff) or die('die');
+			if(mysql_num_rows($selectstuff)>0){
+				echo '<td id="'.$list_day.'" style="background-color:gray;">';
+			}else echo '<td id="'.$list_day.'">';			
+			//END QUERY FOR STUFF
 			echo '<center>'.$list_day.'</center>';
 			
 			echo '</td>';

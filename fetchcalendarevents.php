@@ -15,6 +15,8 @@
 	
 	
 	if(isset($_POST['month'])&&isset($_POST['year'])&&isset($_POST['dayofmonth'])){
+	
+		
 		$ok = 1;
 		
 		//Validate month
@@ -34,6 +36,9 @@
 		//Validate dayofmonth
 		if(is_numeric($_POST['dayofmonth'])){
 			//February
+			
+			
+			
 			if($clean['month']==2){
 				if(leapcheck($clean['year'])){
 					if($_POST['dayofmonth']>=0 && $_POST['dayofmonth']<=29){
@@ -71,7 +76,7 @@
 			
 			$dateformat = $clean['year'].'-'.$clean['month'].'-'.$clean['dayofmonth'];
 			
-			$fetchstuff = 'SELECT * FROM  `calendar` WHERE DATE LIKE  "'.$dateformat.'%" AND groupid="'.$_POST['groupid'].'" ORDER BY DATE ASC';
+			$fetchstuff = 'SELECT * FROM  `calendar` WHERE DATE LIKE  "'.$dateformat.'%" AND groupid="'.$_SESSION['groupinfoarray']['groupid'].'" ORDER BY DATE ASC';
 			$fetchstuff = mysql_query($fetchstuff);
 			while($stuffrow = mysql_fetch_array($fetchstuff)){
 				//var_dump($stuffrow);

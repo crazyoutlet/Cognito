@@ -6,7 +6,7 @@
 	if(isset($_GET['groupid'])){
 		$number = (int)$_GET['groupid'];
 	
-	
+		
 	
 	
 		/* Check if groupid is value and the user is allowed to access it*/
@@ -47,54 +47,6 @@
 			getposts();
 			setInterval(getposts,5000);
 			
-			
-			$('#submitmessage').click(function(){
-				var messagetitle = $('#messagetitle').val();
-				var messagecontent = $('#message').val();
-				
-				$.post("insertprojectmessage.php", { title: messagetitle, message: messagecontent },
-   					function(data){
-   						getposts();
-    					//alert("Data Loaded: " + data);
-   				});
-			});
-			
-			$('td').live('click',function(){
-				var gid = $('#groupie').val();		  
-				var mon = $('#calendarmonth').val();
-				var yea = $('#calendaryear').val();	
-				
-				var squareid = ($(this).attr('id'));
-				$.post('fetchcalendarevents.php',{groupid:gid,month:mon,year:yea,dayofmonth:squareid},
-					function(data){
-					   $('#displaycalendarevents').html(data);
-					   
-					});
-			});
-			$('#createnewbutton').live('click',function(event){
-				var title = $('#createnewtitle').val();
-				var description = $('#createnewdescription').val();
-				var selecteddate = $('#selecteddate').val();
-				var gid = $('#groupie').val();
-				
-				if(title!='' && description!=''){
-					$.post('createnewcalendaritem.php',{title:title,description:description,date:selecteddate,groupid:gid},
-					function(data){
-						
-					   
-					});
-				}
-			});
-			$('#createnewthing').live('click',function(event){
-				event.preventDefault();
-				//alert($('#selecteddate').val());
-									  
-				var displaystring =	'<form>Title<input type="text" id="createnewtitle"><br>Description<textarea id="createnewdescription"/><input type="button" id="createnewbutton" value="Create"></form>';
-						
-				$('#createsomethingnewbox').html(displaystring);					  
-									  
-			});
-						  
 			$('.calnav').click(function(event){
 				event.preventDefault();
 				var value=$(this).html();
@@ -128,6 +80,8 @@
 				});
 			});
 			
+			
+			
 		});
 	</script>
 </head>
@@ -151,7 +105,7 @@
         </div>
         
         <div id="content">
-       		<h2><?php echo $groupinfoarray['title']?> - </h2>
+       		<h2>Dashboard - <?php echo $groupinfoarray['title']?></h2>
        		
        		<h3>Latest Activities <span style="font-weight:normal;">(more)</span></h3>
 
@@ -178,13 +132,12 @@
        			</table>
        		</div>
        		
-       		<h3>Calendar <span style="font-weight:normal;">(more)</span></h3>
+       		<h3>Calendar <span style="font-weight:normal;"><a href="calendar.php">(more)</a></span></h3>
 			<a href="#" class="calnav" value="prev">Previous Month</a>
 			<a href="#" class="calnav" value="next">Next Month</a>
 			<div id="calendararea"><?php include_once('calendardisplay.php');?></div>
 
-			<div id="displaycalendarevents" style="border:1px solid gray; padding:20px"></div>
-       		
+			
        		<h3>Milestones<span style="font-weight:normal;">(more)</span></h3>
        		
        		<h3>Events <span style="font-weight:normal;">(more)</span></h3>

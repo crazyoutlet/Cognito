@@ -8,8 +8,8 @@
         <li><a href="login.php" title="#">Login</a></li>';}
         else{
         	echo '
-        	
-        		<li><a href="groups.php" title="#">Groups</a></li>
+				<li><a href="calendar.php">Calendar</a></li>
+        		<li><a href="settings.php" title="#">Settings</a></li>
         		<li><a href="logout.php" title="#">Logout</a></li>
         	';
         }

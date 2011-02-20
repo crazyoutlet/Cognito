@@ -3,37 +3,123 @@
 	if(!isset($_SESSION['userinfo'])){
 		header('Location:index.php');
 	}
+	
 ?>
 <html>
 <head>
 <title>Cognito</title>
 <link href="css/screen.css" type="text/css" rel="stylesheet" media="screen,projection" />
 <script src="jquery.js"></script>
+	<style>
+		.calview{
+			float:right;
+			background-color:#DDDDDD;
+			color:blue;
+			margin-left:10px;
+		}
+		.currentcalendarmode{
+			font-weight:bold;
+		}
+	</style>
 	<script>
-		$(document).ready(function(){
-		
-			$('#submitmessage').click(function(){
-				var messagetitle = $('#messagetitle').val();
-				var messagecontent = $('#message').val();
+		function loadcalc(){
+				var calendarmonth = $('#calendarmonth').val();
+				var calendaryear = $('#calendaryear').val();
 				
-				$.post("insertprojectmessage.php", { title: messagetitle, message: messagecontent },
-   					function(data){
-   						getposts();
-    					//alert("Data Loaded: " + data);
-   				});
+								
+				$.post('fetchcalendar.php',{month:calendarmonth,year:calendaryear},
+					function(data){
+					   $('#calendararea').html(data);			  
+									  
+				});
+
+		}
+		function initdate(){
+			$.post('getdate.php',{type:'date'},
+				function(data){
+					var datechunks = data.split('-');	  
+					$('#calendarmonth').val(datechunks[1]);
+					$('#calendaryear').val(datechunks[2]);
+					$('#calendarday').val(datechunks[0]);
+					
+					loadcalc();		  
+				});	
+			
+		}
+		function initview(){
+			$('#calendarview').val('month');
+			$('#calviewmonth').addClass('currentcalendarmode');
+			
+			
+		}			
+		$(document).ready(function(){
+			
+			
+			initdate();
+			initview();
+			
+			function rgb2hex(rgb) {
+				rgb = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)$/);
+				function hex(x) {
+					return ("0" + parseInt(x).toString(16)).slice(-2);
+				}
+				return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+			}
+			
+			var laststored=0;
+			var colourstored = '';
+			
+			$('.calview').live('click',function(){
+				var clickedid=$(this).attr('id');
+				//first get the value in the hidden 
+				var hiddenvalue=$('#calendarview').val();
+				if(hiddenvalue=="month"&& clickedid=="calviewday"){
+					
+					$('#calendarview').val('day');
+					
+					setInterval(loadcalc,1000);
+			
+					
+					$('#calviewmonth').removeClass('currentcalendarmode');
+					$('#calviewday').addClass('currentcalendarmode');
+
+				}else if(hiddenvalue=="day" && clickedid=="calviewmonth"){
+					clearInterval(loadcalc);
+					$('#calendarview').val('month');
+					$('#calviewday').removeClass('currentcalendarmode');
+					$('#calviewmonth').addClass('currentcalendarmode');
+					
+				}
 			});
 			
 			$('td').live('click',function(){
+				
+				var squareid = ($(this).attr('id'));
+				$('#calendarday').val(squareid);
+				
+				
 				var gid = $('#groupie').val();		  
 				var mon = $('#calendarmonth').val();
 				var yea = $('#calendaryear').val();	
 				
-				var squareid = ($(this).attr('id'));
+				//Clear the old function
+				if(laststored>0){
+					$('#'+laststored).css('background-color',colourstored);
+				
+				}
+				
 				$.post('fetchcalendarevents.php',{groupid:gid,month:mon,year:yea,dayofmonth:squareid},
 					function(data){
 					   $('#displaycalendarevents').html(data);
 					   
 					});
+					
+				
+				colourstored = $('#'+squareid).css('background-color');	
+				//Color the square red	
+				$('#'+squareid).css('background-color','red');
+				//Backup to clear when the function is called again
+				laststored=squareid;
 			});
 			$('#createnewbutton').live('click',function(event){
 				var title = $('#createnewtitle').val();
@@ -44,8 +130,9 @@
 				if(title!='' && description!=''){
 					$.post('createnewcalendaritem.php',{title:title,description:description,date:selecteddate,groupid:gid},
 					function(data){
-						
-					   
+						//alert('New item added!');
+						alert(data);
+						loadcalc();
 					});
 				}
 			});
@@ -58,7 +145,10 @@
 				$('#createsomethingnewbox').html(displaystring);					  
 									  
 			});
-						  
+			$('#calnavtoday').click(function(event){
+				event.preventDefault();
+				initdate();							  
+			});
 			$('.calnav').click(function(event){
 				event.preventDefault();
 				var value=$(this).html();
@@ -120,14 +210,28 @@
         
         <div id="content">
         
-		<h3>Calendar</h3>
-			<input type="hidden" id="groupie" value="<?php echo $groupinfoarray['groupid']; ?>"/>
-			<input type="hidden" id="calendarmonth" value="<?php echo '2'; ?>"/>
-			<input type="hidden" id="calendaryear" value="<?php echo '2011'; ?>"/>
+		<h1>Calendar</h1>
+			<input type="hidden" id="groupie" value="<?php echo $_SESSION['groupinfoarray']['groupid']; ?>"/>
+			<input type="hidden" id="calendarmonth" value=""/>
+			<input type="hidden" id="calendaryear" value=""/>
+			<input type="hidden" id="calendarday" value=""/>
+			<input type="hidden" id="calendarview" value=""/>
+			
 			
 			<a href="#" class="calnav" value="prev">Previous Month</a>
 			<a href="#" class="calnav" value="next">Next Month</a>
-			<div id="calendararea"><?php include_once('calendardisplay.php');?></div>
+			
+			<a href="#" id="calnavtoday" value="today">Today</a>
+			
+			<a href="#" class="calview " id="calviewmonth">Month</a>
+			<a href="#" class="calview" id="calviewday">Day</a>
+			
+			<div class="label">
+				<?php
+					
+				?>
+			</div>
+			<div id="calendararea"></div>
 
 			<div id="displaycalendarevents" style="border:1px solid gray; padding:20px"></div>
 

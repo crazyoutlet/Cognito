@@ -12,10 +12,13 @@
 		$clean['description'] = mysql_real_escape_string($_POST['description']);
 		$clean['date'] = mysql_real_escape_string($_POST['date']);
 		
-		$insertquery = 'INSERT INTO calendar(itemname,description,date,groupid,repeatid) VALUES("'.$clean['title'].'","'.$clean['description'].'","'.$clean['date'].'","'.$_POST['groupid'].'","1")';
+		$clean['datetime']=$clean['date'].' '.date("H:i:s");
+		echo $clean['datetime'];
+		
+		$insertquery = 'INSERT INTO calendar(itemname,description,date,groupid,repeatid) VALUES("'.$clean['title'].'","'.$clean['description'].'","'.$clean['datetime'].'","'.$_POST['groupid'].'","1")';
 	
 		$query = mysql_query($insertquery) or die('shitface');
 		
-		echo 'success';
+		//echo 'success';
 	}
 ?>

@@ -5,7 +5,7 @@
 	}
 	
 	if(isset($_POST['month'])&&isset($_POST['year'])){
-		//var_dump($_SESSION["groupinfoarray"]);
+		
 		//VALIDATE THE MONTH AND YEAR!
 		$monthheadings = array('January','February','March','April','May','June','July','August','September','October','November','December');
 		echo '<h1>'.$monthheadings[$_POST['month']-1].'</h1>';
@@ -29,7 +29,7 @@
 		echo '<tr>';
 		
 		for($x = 0; $x < $running_day; $x++){
-			echo '<td> </td>';
+			echo '<td class="emptybox"> </td>';
 			$days_in_this_week++;
 		}
 		

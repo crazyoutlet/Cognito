@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 13, 2011 at 09:29 PM
+-- Generation Time: Feb 27, 2011 at 03:47 PM
 -- Server version: 5.1.37
 -- PHP Version: 5.2.11
 
@@ -52,7 +52,7 @@ CREATE TABLE `accounts` (
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` VALUES(1, 'johnnyfishcake', '8d9f17ba1eaa387f25f73cf6854fb0f844ffd537', 1, '2011-02-13 11:55:49', 1);
+INSERT INTO `accounts` VALUES(1, 'johnnyfishcake', '8d9f17ba1eaa387f25f73cf6854fb0f844ffd537', 1, '2011-02-27 15:13:51', 1);
 INSERT INTO `accounts` VALUES(2, 'hwathechong', 'sha1(hwathechong)', 1, '2011-02-04 19:03:20', 1);
 INSERT INTO `accounts` VALUES(3, 'chickennugget', 'sha1(chickennugget)', 1, '2011-02-04 19:28:24', 1);
 
@@ -66,21 +66,22 @@ CREATE TABLE `calendar` (
   `calendarid` int(11) NOT NULL AUTO_INCREMENT,
   `itemname` varchar(100) NOT NULL,
   `description` varchar(500) NOT NULL,
+  `starttime` datetime NOT NULL,
+  `endtime` datetime NOT NULL,
   `date` datetime NOT NULL,
   `groupid` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
   `repeatid` tinyint(4) NOT NULL,
   PRIMARY KEY (`calendarid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `calendar`
 --
 
-INSERT INTO `calendar` VALUES(1, 'Research Paper Submission', 'Submit to Mr Jones at 1 am in front of the staff room.', '2011-02-14 00:00:00', 1, 1, 1);
-INSERT INTO `calendar` VALUES(2, 'Lit review review', 'Review of the lit review by the lit review team, which will be reviewing your lit review using a thorough lit reviewing technique.', '2011-02-10 17:06:32', 1, 1, 1);
-INSERT INTO `calendar` VALUES(3, 'Christmas Rehearsals', 'We have to prepare for the christmas rehearsals at the end of the year even though its February.', '2011-02-08 17:08:38', 1, 1, 1);
-INSERT INTO `calendar` VALUES(4, 'Mentor meetup', 'Our mentor wants to meet us. He has decided to shoot any of us if we do not appear ', '2011-02-14 17:10:55', 1, 1, 1);
+INSERT INTO `calendar` VALUES(20, 'dga', 'asdfasdf', '2011-02-09 10:00:00', '2011-02-09 16:00:00', '2011-02-27 14:30:50', 1, 0, 1);
+INSERT INTO `calendar` VALUES(19, 'Dog', 'face', '2011-02-17 10:00:00', '2011-02-17 12:00:00', '2011-02-27 14:26:39', 1, 0, 1);
+INSERT INTO `calendar` VALUES(17, 'Hey', 'You', '2011-02-28 10:19:19', '2011-02-28 14:19:29', '2011-02-27 14:19:34', 1, 1, 1);
 
 -- --------------------------------------------------------
 

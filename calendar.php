@@ -1,4 +1,5 @@
 <?php
+	////PROBLEM: uncaught exception: Syntax error, unrecognized expression: # <- something to do with datepicker/jquery
 	require_once('inc/header.php');
 	if(!isset($_SESSION['userinfo'])){
 		header('Location:index.php');
@@ -9,7 +10,7 @@
 <head>
 <title>Cognito</title>
 <link href="css/screen.css" type="text/css" rel="stylesheet" media="screen,projection" />
-<script src="jquery.js"></script>
+<script type="text/javascript" src="js/jquery1.4.4.js"></script>
 	<style>
 		.calview{
 			float:right;
@@ -58,6 +59,15 @@
 			initdate();
 			initview();
 			
+			function fetchdayfunc(){
+				$.post('fetchday.php',{},
+					function(data){
+					   $('#calendararea').html(data);
+					
+					});
+
+			}
+			
 			function rgb2hex(rgb) {
 				rgb = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)$/);
 				function hex(x) {
@@ -69,22 +79,33 @@
 			var laststored=0;
 			var colourstored = '';
 			
+			
+			var constantlyloadmonthview=0;
+			
 			$('.calview').live('click',function(){
+				
 				var clickedid=$(this).attr('id');
 				//first get the value in the hidden 
 				var hiddenvalue=$('#calendarview').val();
+				
 				if(hiddenvalue=="month"&& clickedid=="calviewday"){
+					clearInterval(constantlyloadmonthview);
+					
+					//Query from fetchday.php
+					fetchdayfunc();					
 					
 					$('#calendarview').val('day');
-					
-					setInterval(loadcalc,1000);
-			
 					
 					$('#calviewmonth').removeClass('currentcalendarmode');
 					$('#calviewday').addClass('currentcalendarmode');
 
+				}else if(hiddenvalue=="month"){
+					constantlyloadmonthview = setInterval("loadcalc()",1000);
+					
 				}else if(hiddenvalue=="day" && clickedid=="calviewmonth"){
-					clearInterval(loadcalc);
+					loadcalc();
+					constantlyloadmonthview = setInterval("loadcalc()",1000);
+				
 					$('#calendarview').val('month');
 					$('#calviewday').removeClass('currentcalendarmode');
 					$('#calviewmonth').addClass('currentcalendarmode');
@@ -121,6 +142,12 @@
 				//Backup to clear when the function is called again
 				laststored=squareid;
 			});
+			
+			$('td').live('dblclick',function(){
+				
+			
+			
+			});
 			$('#createnewbutton').live('click',function(event){
 				var title = $('#createnewtitle').val();
 				var description = $('#createnewdescription').val();
@@ -140,7 +167,7 @@
 				event.preventDefault();
 				//alert($('#selecteddate').val());
 									  
-				var displaystring =	'<form>Title<input type="text" id="createnewtitle"><br>Description<textarea id="createnewdescription"/><input type="button" id="createnewbutton" value="Create"></form>';
+				var displaystring =	'<form>Title<br><input type="text" id="createnewtitle"><br>Description<br><textarea id="createnewdescription"/><br>Time<input type="text" name="datedate" id="datedatedate" /><input type="button" id="createnewbutton" value="Create"></form>';
 						
 				$('#createsomethingnewbox').html(displaystring);					  
 									  
@@ -211,6 +238,7 @@
         <div id="content">
         
 		<h1>Calendar</h1>
+			
 			<input type="hidden" id="groupie" value="<?php echo $_SESSION['groupinfoarray']['groupid']; ?>"/>
 			<input type="hidden" id="calendarmonth" value=""/>
 			<input type="hidden" id="calendaryear" value=""/>

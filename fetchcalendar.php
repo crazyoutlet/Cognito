@@ -49,10 +49,26 @@
 			
 			$selectstuff = mysql_query($selectstuff) or die('die');
 			if(mysql_num_rows($selectstuff)>0){
-				echo '<td id="'.$list_day.'" style="background-color:gray;">';
-			}else echo '<td id="'.$list_day.'">';			
+				echo '<td id="'.$list_day.'" style="background-color:#B0B0B0 ; height:80px; width:60px;">';
+			}else echo '<td id="'.$list_day.'" style="height:80px; width:60px;">';			
 			//END QUERY FOR STUFF
-			echo '<center>'.$list_day.'</center>';
+			
+			$_SESSION['currentselecteddate']=$dateformat;
+			echo '<span style="float:right;margin-top:0px;">'.$list_day.'</span>';
+			
+			//
+			$fetchstuff = 'SELECT * FROM  `calendar` WHERE DATE LIKE  "'.$dateformat.'%" AND groupid="'.$_SESSION['groupinfoarray']['groupid'].'" ORDER BY DATE ASC';
+			$fetchstuff = mysql_query($fetchstuff);
+			while($stuffrow = mysql_fetch_array($fetchstuff)){
+				//var_dump($stuffrow);
+				$line = '<h5>'.$stuffrow['itemname'].'</h5>';
+				
+				
+				echo $line;
+			}
+
+			
+			//
 			
 			echo '</td>';
 			if($running_day == 6){

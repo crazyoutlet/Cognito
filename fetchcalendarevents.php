@@ -76,6 +76,8 @@
 			
 			$dateformat = $clean['year'].'-'.$clean['month'].'-'.$clean['dayofmonth'];
 			
+			$_SESSION['currentselecteddate']=$dateformat;
+			
 			$fetchstuff = 'SELECT * FROM  `calendar` WHERE DATE LIKE  "'.$dateformat.'%" AND groupid="'.$_SESSION['groupinfoarray']['groupid'].'" ORDER BY DATE ASC';
 			$fetchstuff = mysql_query($fetchstuff);
 			while($stuffrow = mysql_fetch_array($fetchstuff)){

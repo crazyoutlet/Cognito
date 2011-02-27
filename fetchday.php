@@ -6,6 +6,7 @@
 	echo '<h1>Date view - '.$_SESSION['currentselecteddate'].'</h1>';
 	$hours = 24;
 	
+		
 	$fetchstuff = 'SELECT * FROM  `calendar` WHERE DATE LIKE  "'.$_SESSION['currentselecteddate'].'%" AND groupid="'.$_SESSION['groupinfoarray']['groupid'].'" ORDER BY DATE ASC';
 	$fetchstuff = mysql_query($fetchstuff);
 	while($stuffrow = mysql_fetch_array($fetchstuff)){

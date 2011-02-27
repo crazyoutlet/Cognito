@@ -45,7 +45,7 @@
 			
 			$dateformat = $year.'-'.$month.'-'.$day;
 			//echo $_SESSION["groupinfoarray"]["groupid"].$dateformat;
-			$selectstuff = 'SELECT * FROM  `calendar` WHERE DATE LIKE  "'.$dateformat.'%" AND groupid="'.$_SESSION['groupinfoarray']['groupid'].'" ORDER BY DATE ASC';
+			$selectstuff = 'SELECT * FROM  `calendar` WHERE starttime LIKE  "'.$dateformat.'%" AND groupid="'.$_SESSION['groupinfoarray']['groupid'].'" ORDER BY DATE ASC';
 			
 			$selectstuff = mysql_query($selectstuff) or die('die');
 			if(mysql_num_rows($selectstuff)>0){
@@ -57,7 +57,7 @@
 			echo '<span style="float:right;margin-top:0px;">'.$list_day.'</span>';
 			
 			//
-			$fetchstuff = 'SELECT * FROM  `calendar` WHERE DATE LIKE  "'.$dateformat.'%" AND groupid="'.$_SESSION['groupinfoarray']['groupid'].'" ORDER BY DATE ASC';
+			$fetchstuff = 'SELECT * FROM  `calendar` WHERE starttime LIKE  "'.$dateformat.'%" AND groupid="'.$_SESSION['groupinfoarray']['groupid'].'" ORDER BY DATE ASC';
 			$fetchstuff = mysql_query($fetchstuff);
 			while($stuffrow = mysql_fetch_array($fetchstuff)){
 				//var_dump($stuffrow);

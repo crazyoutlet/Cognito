@@ -21,6 +21,9 @@
 		.currentcalendarmode{
 			font-weight:bold;
 		}
+		.hide{
+			display:none;
+		}
 	</style>
 	<script>
 		function loadcalc(){
@@ -93,6 +96,7 @@
 					
 					//Query from fetchday.php
 					fetchdayfunc();					
+					$('.calnav').addClass('hide');
 					
 					$('#calendarview').val('day');
 					
@@ -100,16 +104,19 @@
 					$('#calviewday').addClass('currentcalendarmode');
 
 				}else if(hiddenvalue=="month"){
+					$('.calnav').removeClass('hide');
 					constantlyloadmonthview = setInterval("loadcalc()",1000);
 					
 				}else if(hiddenvalue=="day" && clickedid=="calviewmonth"){
 					loadcalc();
-					constantlyloadmonthview = setInterval("loadcalc()",1000);
+					//constantlyloadmonthview = setInterval("loadcalc()",1000);
 				
 					$('#calendarview').val('month');
 					$('#calviewday').removeClass('currentcalendarmode');
 					$('#calviewmonth').addClass('currentcalendarmode');
 					
+				}else if(hiddenvalue=="week"){
+									
 				}
 			});
 			
@@ -123,11 +130,7 @@
 				var mon = $('#calendarmonth').val();
 				var yea = $('#calendaryear').val();	
 				
-				//Clear the old function
-				if(laststored>0){
-					$('#'+laststored).css('background-color',colourstored);
 				
-				}
 				
 				$.post('fetchcalendarevents.php',{groupid:gid,month:mon,year:yea,dayofmonth:squareid},
 					function(data){
@@ -135,8 +138,16 @@
 					   
 					});
 					
+				//Clear the old function
+				if(laststored>0){
+					$('#'+laststored).css('background-color',colourstored);
+				
+				}
 				
 				colourstored = $('#'+squareid).css('background-color');	
+				
+				
+				
 				//Color the square red	
 				$('#'+squareid).css('background-color','red');
 				//Backup to clear when the function is called again
@@ -144,18 +155,28 @@
 			});
 			
 			$('td').live('dblclick',function(){
-				
+				fetchdayfunc();					
+				$('.calnav').addClass('hide');
+					
+				$('#calendarview').val('day');
+					
+				$('#calviewmonth').removeClass('currentcalendarmode');
+				$('#calviewday').addClass('currentcalendarmode');
+
 			
 			
 			});
 			$('#createnewbutton').live('click',function(event){
 				var title = $('#createnewtitle').val();
 				var description = $('#createnewdescription').val();
-				var selecteddate = $('#selecteddate').val();
+				var starttime = $('#createnewstarttime').val();
+				var endtime = $('#createnewendtime').val();
+				
 				var gid = $('#groupie').val();
 				
 				if(title!='' && description!=''){
-					$.post('createnewcalendaritem.php',{title:title,description:description,date:selecteddate,groupid:gid},
+					
+					$.post('createnewcalendaritem.php',{title:title,description:description,starting:starttime,ending:endtime,groupid:gid},
 					function(data){
 						//alert('New item added!');
 						alert(data);
@@ -165,9 +186,14 @@
 			});
 			$('#createnewthing').live('click',function(event){
 				event.preventDefault();
-				//alert($('#selecteddate').val());
 									  
-				var displaystring =	'<form>Title<br><input type="text" id="createnewtitle"><br>Description<br><textarea id="createnewdescription"/><br>Time<input type="text" name="datedate" id="datedatedate" /><input type="button" id="createnewbutton" value="Create"></form>';
+				var displaystring =	'<form>Title<br><input type="text" id="createnewtitle"><br>';
+				displaystring+='Description<br><textarea id="createnewdescription" rows="5" cols="90"/><br>';
+				displaystring+='Starting Time <input type="text" id="createnewstarttime"/><br>';
+				displaystring+='Ending Time <input type="text" id="createnewendtime"/><br><br>';
+				displaystring+='<select><option value="no">No repeat</option><option value="weekly">Weekly</option></select>';
+				displaystring+='<br><input type="button" id="createnewbutton" value="Create">';
+				displaystring+='</form>';
 						
 				$('#createsomethingnewbox').html(displaystring);					  
 									  
@@ -245,14 +271,15 @@
 			<input type="hidden" id="calendarday" value=""/>
 			<input type="hidden" id="calendarview" value=""/>
 			
-			
 			<a href="#" class="calnav" value="prev">Previous Month</a>
 			<a href="#" class="calnav" value="next">Next Month</a>
 			
 			<a href="#" id="calnavtoday" value="today">Today</a>
 			
 			<a href="#" class="calview " id="calviewmonth">Month</a>
+			<a href="#" class="calview" id="calviewweek">Week</a>
 			<a href="#" class="calview" id="calviewday">Day</a>
+			
 			
 			<div class="label">
 				<?php

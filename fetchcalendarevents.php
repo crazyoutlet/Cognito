@@ -78,14 +78,14 @@
 			
 			$_SESSION['currentselecteddate']=$dateformat;
 			
-			$fetchstuff = 'SELECT * FROM  `calendar` WHERE DATE LIKE  "'.$dateformat.'%" AND groupid="'.$_SESSION['groupinfoarray']['groupid'].'" ORDER BY DATE ASC';
+			$fetchstuff = 'SELECT * FROM  `calendar` WHERE starttime LIKE  "'.$dateformat.'%" AND groupid="'.$_SESSION['groupinfoarray']['groupid'].'" ORDER BY DATE ASC';
 			$fetchstuff = mysql_query($fetchstuff);
 			while($stuffrow = mysql_fetch_array($fetchstuff)){
-				//var_dump($stuffrow);
+				
 				$line = '<h5>'.$stuffrow['itemname'].'</h5>';
 				$line .='<p>'.$stuffrow['description'].'</p>';
-				$line .='<span>'.$stuffrow['date'].'</span>';
-				
+				$line .='<span>Starting time: '.$stuffrow['starttime'].'</span><br>';
+				$line .='<span>Ending time: '.$stuffrow['endtime'].'</span>';
 				
 				echo $line;
 			}
